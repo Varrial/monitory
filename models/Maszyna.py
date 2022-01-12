@@ -4,11 +4,27 @@ from services.read import getData
 
 class maszyna:
     def __init__(self, nazwa, refresh, ilosc_mb=0, c_faktycznej_pracy=0, c_pracy_na_pusto=0, c_wyl_maszyny=0):
+
+
         if (nazwa[:-1] == "wielopila"):
+            if nazwa[-1:] == '1':
+                self.wartosc_minimalna_amperow = float(getData("Ampery WieloPila1"))
+            elif nazwa[-1:] == '2':
+                self.wartosc_minimalna_amperow = float(getData("Ampery WieloPila2"))
+            self.wspolczynnik = 0.9  # wielopila1, 2 i 3
             self.nazwa = "WieloPiła" + " " + nazwa[-1:]
+
         elif (nazwa[:-1] == "trak"):
+            self.wartosc_minimalna_amperow = float(getData("Ampery Traki"))
+            if nazwa[-1:] == '1':
+                self.wspolczynnik = 0.66
+            elif nazwa[-1:] == '3':
+                self.wspolczynnik = 0.64
             self.nazwa = "Trak" + " " + nazwa[-1:]
 
+
+        # pusta godzina rozpoczecia
+        self.czas_rozpoczecia = " "
 
         # Wszystkie czasy wyrazane są w sekundach
         self.ilosc_mb = ilosc_mb
@@ -20,11 +36,7 @@ class maszyna:
         self.prev_czas = datetime.datetime.now()
         self.prady = 0  # suma wszystkich pradow
         self.prady_ilosc = 0 # ilosc pradow - po podzieleniu srednia
-        self.wspolczynnik = 0.9  # wielopila1, 2 i 3
-        if self.nazwa_wew == "trak1":
-            self.wspolczynnik = 0.66
-        elif self.nazwa_wew == "trak3":
-            self.wspolczynnik = 0.64
+
 
 
     def wyrownaj_czas(self, czas):
@@ -41,6 +53,10 @@ class maszyna:
             tmp = self.c_pracy_na_pusto
         elif (typ_urz == "c_wyl_maszyny"):
             tmp = self.c_wyl_maszyny
+
+        if tmp < 0:
+            tmp = 0
+
         s = int(tmp)
 
         procent = int(round(s / 28000 * 100, 0))
@@ -66,21 +82,26 @@ class maszyna:
 
         return czas
 
-    def dodajInfo(self, posuw_mb, posuw_skok, prad, impuls, zolty):
+    def dodajInfo(self, posuw_mb, posuw_skok, prad, impuls, zolty, data=datetime.datetime.now().__str__()):
         posuw_mb = float(posuw_mb)
         posuw_skok = float(posuw_skok)
         prad = float(prad)
         impuls = int(impuls)
 
-        if zolty == 1:
-            self.c_pracy_na_pusto += 1.0
-        else:
-            self.c_faktycznej_pracy += 1.0
-            self.ilosc_mb += posuw_mb / 60 * self.wspolczynnik
-        self.c_wyl_maszyny -= 1.0
+        if prad > self.wartosc_minimalna_amperow:
+            if zolty == 1:
+                self.c_pracy_na_pusto += 1.0
+            else:
+                if self.czas_rozpoczecia == " ":
+                    self.czas_rozpoczecia = data[11:16]
+                self.c_faktycznej_pracy += 1.0
+                self.ilosc_mb += posuw_mb / 60 * self.wspolczynnik
+                self.prady += prad
+                self.prady_ilosc += 1
 
-        self.prady += prad
-        self.prady_ilosc += 1
+            self.c_wyl_maszyny -= 1.0
+
+
 
     def sr_prad_pracy (self):
         if self.prady_ilosc == 0:

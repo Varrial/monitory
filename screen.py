@@ -11,6 +11,7 @@ import paho.mqtt.client as mqtt  # import the client1
 import textlabel
 from services.DataMQTT import MqttService
 from services.read import getData
+from services.PreviousData import getPrevious
 from models.Maszyna import maszyna
 
 REFRESH = int(getData("Odswiezanie"))
@@ -26,6 +27,7 @@ class Screen(BoxLayout):
     tekst4 = getData("Tekst4")
     tekst5 = getData("Tekst5")
     tekst6 = getData("Tekst6")
+    tekst7 = getData("Tekst7")
     font = getData("RozmiarTekstu")
 
     def Pplus(self):
@@ -44,6 +46,7 @@ class Screen(BoxLayout):
         self.ids.Pc_faktycznej_pracy.text = self.P.czas_text("c_faktycznej_pracy")
         self.ids.Pc_pracy_na_pusto.text = self.P.czas_text("c_pracy_na_pusto")
         self.ids.Pc_wyl_maszyny.text = self.P.czas_text("c_wyl_maszyny")
+        self.ids.Pgodz_rzpoczecia.text = self.P.czas_rozpoczecia
 
     def Lplus(self):
         now = datetime.datetime.now()
@@ -63,8 +66,29 @@ class Screen(BoxLayout):
         self.ids.Lc_faktycznej_pracy.text = self.L.czas_text("c_faktycznej_pracy")
         self.ids.Lc_pracy_na_pusto.text = self.L.czas_text("c_pracy_na_pusto")
         self.ids.Lc_wyl_maszyny.text = self.L.czas_text("c_wyl_maszyny")
+        self.ids.Lgodz_rzpoczecia.text = self.L.czas_rozpoczecia
 
     def start(self):
+# ten fragment odpowiada za uzupełnianie rekordów z bazy jesli nastąpiła awaria
+        # godzina = datetime.datetime.now().hour
+        # godzina = 8  # do testowania
+        # if 6 < godzina and 22 > godzina:
+        #     tabL = []
+        #     tabP = []
+        #     if 14 > godzina: #pierwsza zmiana
+        #         tabL = getPrevious(6, 14, self.L.nazwa_wew)
+        #         tabP = getPrevious(6, 14, self.P.nazwa_wew)
+        #     else:           # druga zmiana
+        #         tabL = getPrevious(14, 22, self.L.nazwa_wew)
+        #         tabP = getPrevious(14, 22, self.P.nazwa_wew)
+        #
+        #     for i in tabL:
+        #         self.L.dodajInfo(i['PRAD'], 0, i['POSUW'], 0, i['ZOLTY'], i['DATA_SERWER'])
+        #
+        #     for i in tabP:
+        #         self.P.dodajInfo(i['PRAD'], 0, i['POSUW'], 0, i['ZOLTY'], i['DATA_SERWER'])
+# koniec fragmentu
+
         Clock.schedule_interval(self.zegar, REFRESH)
 
     def zegar(self, dt):
@@ -99,7 +123,7 @@ class ScreenApp(App):
             elif (nazwa == userdata['self'].scr.P.nazwa_wew):
                 userdata['self'].scr.P.dodajInfo(posuw_mb, posuw_skok, prad, impuls, zolty_sygnal)
 
-            print(msg.payload)
+            # print(msg.payload)
 
         parameters = {'self': self}
 
