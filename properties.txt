@@ -1,0 +1,15 @@
+Lewy: trak3
+Prawy: trak1
+Fullscreen: t
+Odswiezanie: 60
+Adres_Brokera: 192.168.8.157
+Topic: hala1/maszyny/
+Klient: monitor1
+zmiany: cronetab -e
+Tekst1:  
+Tekst2: Śr. Prąd
+Tekst3: Metr b.
+Tekst4: Czas pracy
+Tekst5: Czas na pusto
+Tekst6: Czas wyłączenia
+RozmiarTekstu: 70

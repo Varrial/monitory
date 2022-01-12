@@ -1,0 +1,103 @@
+#: include textlabel.kv
+#: import getData services.read
+
+<Screen>:
+    spacing: 5
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        canvas:
+            Rectangle:
+                size: self.width, self.height
+                pos: self.x, self.y
+
+        TextLabel:
+            text: root.tekst1
+
+        TextLabel:
+            text: root.tekst2
+
+        TextLabel:
+            text: root.tekst3
+
+        TextLabel:
+            text: root.tekst4
+
+        TextLabel:
+            text: root.tekst5
+
+        TextLabel:
+            text: root.tekst6
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        canvas:
+            Rectangle:
+                size: self.width, self.height
+                pos: self.x, self.y
+        TextLabel:
+            id: Lnazwa
+            text: str(root.L.nazwa)
+
+        TextLabel:
+            id: Lsr_prad_pracy
+            text: str(root.L.sr_prad_pracy())
+
+        TextLabel:
+            id: Lilosc_mb
+            text: str(root.L.ilosc_mb)
+
+        TextLabel:
+            id: Lc_faktycznej_pracy
+            text: str(int(root.L.c_faktycznej_pracy)) + "m (0%)"
+
+        TextLabel:
+            id: Lc_pracy_na_pusto
+            text: str(int(root.L.c_pracy_na_pusto)) + "m (0%)"
+
+        TextLabel:
+            id: Lc_wyl_maszyny
+            text: str(int(root.L.c_wyl_maszyny)) + "m (0%)"
+
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        canvas:
+            Rectangle:
+                size: self.width, self.height
+                pos: self.x, self.y
+        TextLabel:
+            id: Pnazwa
+            text: str(root.P.nazwa)
+
+        TextLabel:
+            id: Psr_prad_pracy
+            text: str(root.P.sr_prad_pracy())
+
+        TextLabel:
+            id: Pilosc_mb
+            text: str(root.P.ilosc_mb)
+
+        TextLabel:
+            id: Pc_faktycznej_pracy
+            text: str(int(root.P.c_faktycznej_pracy)) + "m (0%)"
+
+        TextLabel:
+            id: Pc_pracy_na_pusto
+            text: str(int(root.P.c_pracy_na_pusto)) + "m (0%)"
+
+        TextLabel:
+            id: Pc_wyl_maszyny
+            text: str(int(root.P.c_wyl_maszyny)) + "m (0%)"
+
+
+
+
+
+
+
+
+
