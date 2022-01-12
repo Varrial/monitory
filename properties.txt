@@ -5,7 +5,7 @@ Odswiezanie: 60
 Adres_Brokera: 192.168.8.157
 Topic: hala1/maszyny/
 Klient: monitor1
-zmiany: cronetab -e
+zmiany: crontab -e
 Tekst1:  
 Tekst2: Śr. Prąd
 Tekst3: Metr b.
