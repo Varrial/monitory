@@ -85,17 +85,18 @@ class maszyna:
         zolty = int(zolty)
 
         if prad > self.wartosc_minimalna_amperow:
-            if zolty == 1:
-                self.c_pracy_na_pusto += 1.0
-            else:
-                if self.czas_rozpoczecia == " ":
-                    self.czas_rozpoczecia = data[11:16]
-                self.c_faktycznej_pracy += 1.0
-                self.ilosc_mb += posuw_mb / 60 * self.wspolczynnik
-                self.prady += prad
-                self.prady_ilosc += 1
+            if self.nazwa_wew != "wielopila2" or posuw_mb > 3.3:
+                if zolty == 1:
+                    self.c_pracy_na_pusto += 1.0
+                else:
+                    if self.czas_rozpoczecia == " ":
+                        self.czas_rozpoczecia = data[11:16]
+                    self.c_faktycznej_pracy += 1.0
+                    self.ilosc_mb += posuw_mb / 60 * self.wspolczynnik
+                    self.prady += prad
+                    self.prady_ilosc += 1
 
-            self.c_wyl_maszyny -= 1.0
+                self.c_wyl_maszyny -= 1.0
 
     def sr_prad_pracy (self):
         if self.prady_ilosc == 0:
