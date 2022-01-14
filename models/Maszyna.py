@@ -37,14 +37,9 @@ class maszyna:
         self.prady = 0  # suma wszystkich pradow
         self.prady_ilosc = 0 # ilosc pradow - po podzieleniu srednia
 
-
-
     def wyrownaj_czas(self, czas):
         tmp = czas.seconds + ((czas.microseconds)/1000000)
         self.c_wyl_maszyny += tmp
-
-
-
 
     def czas_text(self, typ_urz):
         tmp = self.c_faktycznej_pracy
@@ -54,12 +49,12 @@ class maszyna:
         elif (typ_urz == "c_wyl_maszyny"):
             tmp = self.c_wyl_maszyny
 
-        if tmp < 0:
-            tmp = 0
+        # if tmp < 0:  # sytuacja po odzyskiwaniu rekordów - brak ustalonego obecnego czasu
+        #     tmp = 28000 + tmp BLAD NAPRAWIONY
 
         s = int(tmp)
 
-        procent = int(round(s / 28000 * 100, 0))
+        procent = int(round(s / 28800 * 100, 0))
 
 
         czas = ""
@@ -101,14 +96,12 @@ class maszyna:
 
             self.c_wyl_maszyny -= 1.0
 
-
-
     def sr_prad_pracy (self):
         if self.prady_ilosc == 0:
             return "0 A"
         return str(round(self.prady/self.prady_ilosc, 1)) + " A"
 
-    def clear (self):
+    def clear (self):  # obecnie nie używane
         self.prady = 0
         self.prady_ilosc = 0
         self.ilosc_mb = 0

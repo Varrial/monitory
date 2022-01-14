@@ -1,8 +1,12 @@
-Lewy: trak3
+Lewy: wielopila1
 Prawy: trak1
-Fullscreen: t
+Fullscreen: n
+Odzyskiwanie Danych: t
 Odswiezanie: 60
-Adres_Brokera: 192.168.8.157
+Ampery WieloPila1: 11.1
+Ampery WieloPila2: 11.4
+Ampery Traki: 25.0
+Adres_Brokera: 94.254.246.33
 Topic: hala1/maszyny/
 Klient: monitor1
 zmiany: crontab -e
@@ -12,4 +16,5 @@ Tekst3: Metr b.
 Tekst4: Czas pracy
 Tekst5: Czas na pusto
 Tekst6: Czas wyłączenia
+Tekst7: Godz. rozpoczęcia
 RozmiarTekstu: 70

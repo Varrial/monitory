@@ -69,25 +69,8 @@ class Screen(BoxLayout):
         self.ids.Lgodz_rzpoczecia.text = self.L.czas_rozpoczecia
 
     def start(self):
-# ten fragment odpowiada za uzupełnianie rekordów z bazy jesli nastąpiła awaria
-        # godzina = datetime.datetime.now().hour
-        # godzina = 8  # do testowania
-        # if 6 < godzina and 22 > godzina:
-        #     tabL = []
-        #     tabP = []
-        #     if 14 > godzina: #pierwsza zmiana
-        #         tabL = getPrevious(6, 14, self.L.nazwa_wew)
-        #         tabP = getPrevious(6, 14, self.P.nazwa_wew)
-        #     else:           # druga zmiana
-        #         tabL = getPrevious(14, 22, self.L.nazwa_wew)
-        #         tabP = getPrevious(14, 22, self.P.nazwa_wew)
-        #
-        #     for i in tabL:
-        #         self.L.dodajInfo(i['PRAD'], 0, i['POSUW'], 0, i['ZOLTY'], i['DATA_SERWER'])
-        #
-        #     for i in tabP:
-        #         self.P.dodajInfo(i['PRAD'], 0, i['POSUW'], 0, i['ZOLTY'], i['DATA_SERWER'])
-# koniec fragmentu
+        if (getData("Odzyskiwanie Danych") == "T" or getData("Odzyskiwanie Danych") == "t"):
+            self.uzupelnianieRekordów()  # uzupełnia utracone z powodu pozniejszego włączenia rekordy
 
         Clock.schedule_interval(self.zegar, REFRESH)
 
@@ -95,6 +78,34 @@ class Screen(BoxLayout):
         self.Pplus()
         self.Lplus()
 
+    def uzupelnianieRekordów(self):
+        now = datetime.datetime.now()
+        # now -= datetime.timedelta(days=4)  # dzien poprzedni - do testowania w nocy (jeszcze w PreviousData: 14
+        # now = now.replace(hour=13, minute=59, second=0, microsecond=0)  # tez do testow
+
+        if 6 < now.hour and 22 > now.hour:
+            tabL = []
+            tabP = []
+            dt = datetime
+
+            if 14 > now.hour:  # pierwsza zmiana
+                tabL = getPrevious(6, 14, self.L.nazwa_wew)
+                tabP = getPrevious(6, 14, self.P.nazwa_wew)
+                dt = now - now.replace(hour=6, minute=0, second=0, microsecond=0)
+            else:  # druga zmiana
+                tabL = getPrevious(14, 22, self.L.nazwa_wew)
+                tabP = getPrevious(14, 22, self.P.nazwa_wew)
+                dt = now - now.replace(hour=14, minute=0, second=0, microsecond=0)
+            self.L.wyrownaj_czas(dt)  # uzupełnia czas kiedy program nie był włączony
+            self.P.wyrownaj_czas(dt)  # dzieki temu cza wyłączenia nie jest ujemny
+
+            for i in tabL:
+                self.L.dodajInfo(i['PRAD'], 0, i['POSUW'], 0, i['ZOLTY'], i['DATA_SERWER'])
+
+            for i in tabP:
+                self.P.dodajInfo(i['PRAD'], 0, i['POSUW'], 0, i['ZOLTY'], i['DATA_SERWER'])
+        self.Lplus()
+        self.Pplus()
 
 class ScreenApp(App):
 
