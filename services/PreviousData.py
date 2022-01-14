@@ -10,9 +10,9 @@ def getPrevious(od, do, maszyna):
     port = "88"
     if ip[0] == "9":
         port = "888"
-        data = datetime.datetime.now()
-        # data -= datetime.timedelta(days=4)  # dzien poprzedni - do testowania w nocy
-        data = data.strftime("%Y-%m-%d")
+    data = datetime.datetime.now()
+    # data -= datetime.timedelta(days=4)  # dzien poprzedni - do testowania w nocy
+    data = data.strftime("%Y-%m-%d")
 
     r = requests.post("http://" + ip + ":" + port + "/pobierz_dane_czas.php",
         json={  'ID': "65jww4A7",
