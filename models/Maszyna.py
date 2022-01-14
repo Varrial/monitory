@@ -82,9 +82,10 @@ class maszyna:
         posuw_skok = float(posuw_skok)
         prad = float(prad)
         impuls = int(impuls)
+        zolty = int(zolty)
 
         if prad > self.wartosc_minimalna_amperow:
-            if zolty == "1":
+            if zolty == 1:
                 self.c_pracy_na_pusto += 1.0
             else:
                 if self.czas_rozpoczecia == " ":
