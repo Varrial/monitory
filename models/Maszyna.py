@@ -85,7 +85,7 @@ class maszyna:
         zolty = int(zolty)
 
         if prad > self.wartosc_minimalna_amperow:
-            if self.nazwa_wew != "wielopila2" or posuw_mb > 3.3:
+            if self.nazwa_wew != "wielopila2" or posuw_mb > 3.6:
                 if zolty == 1:
                     self.c_pracy_na_pusto += 1.0
                 else:
