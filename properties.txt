@@ -1,12 +1,12 @@
 Lewy: wielopila1
 Prawy: trak1
 Fullscreen: n
-Odzyskiwanie Danych: t
+Odzyskiwanie Danych: n
 Odswiezanie: 60
 Ampery WieloPila1: 11.1
 Ampery WieloPila2: 11.4
 Ampery Traki: 25.0
-Adres_Brokera: 94.254.246.33
+Adres_Brokera: localhost
 Topic: hala1/maszyny/
 Klient: monitor1
 zmiany: crontab -e
