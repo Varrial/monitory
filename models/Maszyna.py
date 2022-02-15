@@ -25,6 +25,7 @@ class maszyna:
 
         # pusta godzina rozpoczecia
         self.czas_rozpoczecia = " "
+        self.czas_nieliczony = 0
 
         # Wszystkie czasy wyrazane są w sekundach
         self.ilosc_mb = ilosc_mb
@@ -90,7 +91,10 @@ class maszyna:
                     self.c_pracy_na_pusto += 1.0
                 else:
                     if self.czas_rozpoczecia == " ":
-                        self.czas_rozpoczecia = data[11:16]
+                        if self.czas_nieliczony < 60:
+                            self.czas_nieliczony += 1
+                        else:
+                            self.czas_rozpoczecia = data[11:16]
                     self.c_faktycznej_pracy += 1.0
                     self.ilosc_mb += posuw_mb / 60 * self.wspolczynnik
                     self.prady += prad
