@@ -6,7 +6,8 @@ from services.read import getData
 def getPrevious(od, do, maszyna):
     # prad zamieniony z posowem
 
-    ip = "94.254.246.33"
+    ip = getData("Adres_Brokera")
+    # ip = "94.254.246.33"
     port = "88"
     if ip[0] == "9":
         port = "888"
