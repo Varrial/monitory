@@ -78,7 +78,7 @@ class maszyna:
 
         return czas
 
-    def dodajInfo(self, posuw_mb, posuw_skok, prad, impuls, zolty, data="null"):
+    def dodajInfo(self, posuw_mb, posuw_skok, prad, impuls, zolty, data=datetime.datetime.now().__str__()):
         posuw_mb = float(posuw_mb)
         # posuw_skok = float(posuw_skok)
         prad = float(prad)
@@ -94,8 +94,10 @@ class maszyna:
                         if self.czas_nieliczony < 60:
                             self.czas_nieliczony += 1
                         else:
-                            if data == "null":
-                                data = data=datetime.datetime.now().__str__()
+                            # if data == "null":
+                            #     data = data=datetime.datetime.now().__str__()
+                            # Kamil odkomentowanie tego oraz ustawienie daty domyslnej na "null" (string) prawdopodobnie
+                            # rozwiązuje moj problem, ale troche jestem ciekawy kiedy tu zajrzysz ;-)
                             self.czas_rozpoczecia = data[11:16]
                     self.c_faktycznej_pracy += 1.0
                     self.ilosc_mb += posuw_mb / 60 * self.wspolczynnik
